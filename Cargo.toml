@@ -1,0 +1,15 @@
+[package]
+name = "gtk_test"
+version = "0.1.0"
+authors = ["AndyLnd <andy@wire.com>"]
+
+[dependencies]
+cairo-rs = "0.5"
+gio = "0.5"
+rand = "0.5"
+gdk="0.9"
+
+[dependencies.gtk]
+version = "0.5.0"
+features = ["v3_10"]
+
