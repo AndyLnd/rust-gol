@@ -102,8 +102,10 @@ fn start_gol<'a>(application: &'a gtk::Application, cells: Rc<RefCell<Cells>>) {
         }
     });
 
-    drawing_area.add_tick_callback(move |view, _| {
-        view.queue_draw();
+    window.add(&drawing_area);
+
+    timeout_add(50, move || {
+        &drawing_area.queue_draw();
         Continue(true)
     });
 
@@ -113,7 +115,6 @@ fn start_gol<'a>(application: &'a gtk::Application, cells: Rc<RefCell<Cells>>) {
         win.destroy();
         Inhibit(false)
     });
-    window.add(&drawing_area);
     window.show_all();
 }
 
