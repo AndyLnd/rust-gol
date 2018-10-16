@@ -19,15 +19,15 @@ type CellMap = Vec<Vec<bool>>;
 struct Cells {
     current: CellMap,
     next: CellMap,
-    width: u32,
-    height: u32,
+    width: usize,
+    height: usize,
 }
 
 impl Cells {
-    fn new(width: u32, height: u32) -> Self {
+    fn new(width: usize, height: usize) -> Self {
         Cells {
             current: Self::generate_random(width, height),
-            next: vec![vec![false; height as usize]; width as usize],
+            next: vec![vec![false; height]; width],
             width: width,
             height: height,
         }
@@ -52,7 +52,7 @@ impl Cells {
                         let y0 = (y1 + 1) % self.height;
                         let y2 = (y1 + self.height - 1) % self.height;
 
-                        let n = |x: u32, y: u32| self.current[x as usize][y as usize] as i32;
+                        let n = |x: usize, y: usize| self.current[x][y] as i32;
                         let n_count = n(x0, y0)
                             + n(x1, y0)
                             + n(x2, y0)
@@ -61,7 +61,7 @@ impl Cells {
                             + n(x0, y2)
                             + n(x1, y2)
                             + n(x2, y2);
-                        let is_alive = self.current[x1 as usize][y1 as usize];
+                        let is_alive = self.current[x1][y1];
                         match n_count {
                             2 if is_alive => true,
                             3 => true,
@@ -70,7 +70,7 @@ impl Cells {
                     }).collect()
             }).collect();
     }
-    fn generate_random(width: u32, height: u32) -> CellMap {
+    fn generate_random(width: usize, height: usize) -> CellMap {
         (0..width)
             .map(|_| (0..height).map(|_| rand::random::<bool>()).collect())
             .collect()
